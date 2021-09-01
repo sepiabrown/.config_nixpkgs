@@ -1,7 +1,63 @@
+  # How to install :
+  #
+  # 1.
+  # For unstable : 
+  # nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  # nix-channel --update
+  # 
+  # For specific version :
+  # nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  # nix-channel --update
+  #
+  # 2.
+  # nix-shell '<home-manager>' -A install
+  #
+  # Post install :
+  # home-manager switch
+  # 
+  # Rollbacks :
+  # home-manager generations
+  # 2018-01-04 11:56 : id 765 -> /nix/store/kahm1rxk77mnvd2l8pfvd4jkkffk5ijk-home-manager-generation
+  # 2018-01-03 10:29 : id 764 -> /nix/store/2wsmsliqr5yynqkdyjzb1y57pr5q2lsj-home-manager-generation
+  # 2018-01-01 12:21 : id 763 -> /nix/store/mv960kl9chn2lal5q8lnqdp1ygxngcd1-home-manager-generation
+  # 2017-12-29 21:03 : id 762 -> /nix/store/6c0k1r03fxckql4vgqcn9ccb616ynb94-home-manager-generation
+  # 2017-12-25 18:51 : id 761 -> /nix/store/czc5y6vi1rvnkfv83cs3rn84jarcgsgh-home-manager-generation
+  #
+  # /nix/store/mv960kl9chn2lal5q8lnqdp1ygxngcd1-home-manager-generation/activate
+  #
+  # Nix Flake:
+  #{
+  #  description = "NixOS configuration";
+  #
+  #  inputs = {
+  #    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  #    home-manager.url = "github:nix-community/home-manager";
+  #  };
+  # 
+  #  outputs = { home-manager, nixpkgs, ... }: {
+  #    nixosConfigurations = {
+  #      hostname = nixpkgs.lib.nixosSystem {
+  #        system = "x86_64-linux";
+  #        modules = [
+  #          ./configuration.nix
+  #          home-manager.nixosModules.home-manager
+  #          {
+  #            home-manager.useGlobalPkgs = true;
+  #            home-manager.useUserPackages = true;
+  #            home-manager.users.jdoe = import ./home.nix;
+  #          }
+  #        ];
+  #      };
+  #    };
+  #  };
+  #}
+  # When using flakes, switch to new configurations as you do for the whole system 
+  # (e. g. nixos-rebuild switch --flake <path>) instead of using the home-manager command line tool.
+  
 { config, pkgs, ... }:
 
 let
-
+  
   # On terminal,
   #
   # nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
@@ -105,6 +161,7 @@ in
     #   signByDefault = true;
     # };
   };
+
 
   programs.gh.enable = true;
   # This value determines the Home Manager release that your
