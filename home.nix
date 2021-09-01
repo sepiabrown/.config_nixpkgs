@@ -88,9 +88,59 @@ in
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "sepiabrown";
-  home.homeDirectory = "/home/sepiabrown";
-
+  home = {
+    username = "sepiabrown";
+    homeDirectory = "/home/sepiabrown";
+    packages = with pkgs;[
+    #system
+      htop
+      ripgrep
+      zip
+      unzip
+      wget
+      curl
+      file
+      rclone
+      alacritty
+  
+    #utils
+      vimHugeX
+      nixos-2009.emacs
+  
+    #document tools
+      texlive.combined.scheme-full
+      poppler_utils
+  
+    #dev
+      # nixos-2009.julia_13
+      nixos-2003.julia_11
+      #python3Packages.jupyterlab
+      #jupyter
+  
+    #fonts
+      anonymousPro # unfree, TrueType font set intended for source code 
+      corefonts # unfree, Microsoft's TrueType core fonts for the Web has an unfree license (‘unfreeRedistributable’), refusing to evaluate.
+      dejavu_fonts # unfree, A typeface family based on the Bitstream Vera fonts
+      noto-fonts # Beautiful and free fonts for many languages
+      freefont_ttf # GNU Free UCS Outline Fonts
+      #### google-fonts # not working with emacs
+      inconsolata # A monospace font for both screen and print
+      liberation_ttf # Liberation Fonts, replacements for Times New Roman, Arial, and Courier New
+      powerline-fonts  # unfree? Oh My ZSH, agnoster fonts  
+      source-code-pro
+      terminus_font  # unfree, A clean fixed width font
+      ttf_bitstream_vera # unfree
+      ubuntu_font_family
+      d2coding
+    ];
+    file = {
+      ".config/alacritty/alacritty.yaml".text = ''
+        env:
+          TERM: xterm-256color
+      '';  
+    };
+  };
+  
   nixpkgs.config.allowUnfree = true;
 
   fonts.fontconfig.enable = true;
@@ -108,48 +158,7 @@ in
   #   })
   # ];
 
-  home.packages = with pkgs;[
-  #system
-    htop
-    ripgrep
-    zip
-    unzip
-    wget
-    curl
-    file
-    rclone
-
-
-  #utils
-    vimHugeX
-    nixos-2009.emacs
-
-  #document tools
-    texlive.combined.scheme-full
-    poppler_utils
-
-  #dev
-    # nixos-2009.julia_13
-    nixos-2003.julia_11
-    #python3Packages.jupyterlab
-    #jupyter
-
-  #fonts
-    anonymousPro # unfree, TrueType font set intended for source code 
-    corefonts # unfree, Microsoft's TrueType core fonts for the Web has an unfree license (‘unfreeRedistributable’), refusing to evaluate.
-    dejavu_fonts # unfree, A typeface family based on the Bitstream Vera fonts
-    noto-fonts # Beautiful and free fonts for many languages
-    freefont_ttf # GNU Free UCS Outline Fonts
-    #### google-fonts # not working with emacs
-    inconsolata # A monospace font for both screen and print
-    liberation_ttf # Liberation Fonts, replacements for Times New Roman, Arial, and Courier New
-    powerline-fonts  # unfree? Oh My ZSH, agnoster fonts  
-    source-code-pro
-    terminus_font  # unfree, A clean fixed width font
-    ttf_bitstream_vera # unfree
-    ubuntu_font_family
-    d2coding
-  ];
+  
 
   programs.git = {
     enable = true;
